@@ -16,6 +16,7 @@ defmodule AskGary.User do
     model
       |> cast(params, ~w(name username), [])
       |> validate_length(:username, min: 1, max: 20)
+      |> validate_length(:name, min: 1)
       |> unique_constraint(:username)
   end
 

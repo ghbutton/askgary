@@ -1,6 +1,7 @@
 defmodule AskGary.UserController do
   use AskGary.Web, :controller
   plug :authenticate_user when action in [:index, :show]
+  plug :scrub_params, "user" when action in [:create]
 
   alias AskGary.User
 

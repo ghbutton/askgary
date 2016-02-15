@@ -21,12 +21,26 @@ let Channel = {
     let postButton   = document.getElementById("msg-submit")
     let chaChannel   = socket.channel("channels:" + channelId)
 
-    postButton.addEventListener("click", e => {
+    function postData(event){
       let payload = {content: msgInput.value}
       chaChannel.push("new_message", payload)
                 .receive("error", e => console.log(e) )
       msgInput.value = ""
+    }
+
+    postButton.addEventListener("click", e => {
+      postData(e);
     })
+
+    msgInput.addEventListener("keydown", function(e) {
+      if (!e) { var e = window.event; }
+
+      // Enter is pressed
+      if (e.keyCode == 13) {
+        e.preventDefault(); // sometimes useful;
+        postData(e);
+      }
+    }, false);
 
     chaChannel.on("new_message", (resp) => {
       this.renderMessage(msgContainer, resp)

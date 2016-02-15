@@ -1,5 +1,6 @@
 defmodule AskGary.ChannelController do
   use AskGary.Web, :controller
+  plug :scrub_params, "channel" when action in [:create]
 
   alias AskGary.Channel
 
