@@ -20,7 +20,13 @@ defmodule AskGary.Router do
     get "/", PageController, :index
     resources "/users", UserController, only: [:index, :show, :new, :create]
     resources "/sessions", SessionController, only: [:new, :create, :delete]
-    resources "/channels", ChannelController, only: [:index, :show]
+
+  end
+
+  scope "/", AskGary do
+    pipe_through [:browser, :authenticate_user]
+
+    resources "/channels", ChannelController, only: [:index, :show, :new, :create]
   end
 
   # Other scopes may use custom stacks.

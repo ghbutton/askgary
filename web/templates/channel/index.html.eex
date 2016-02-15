@@ -1,3 +1,5 @@
+<div class="row pull-right"><p><%= link "+ New", to: channel_path(@conn, :new) %></p></div>
+
 <h1>Listing Channels</h1>
 <table class="table">
   <%= for channel <- @channels do %>

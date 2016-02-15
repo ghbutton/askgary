@@ -55,6 +55,8 @@ defmodule AskGary.Web do
   def router do
     quote do
       use Phoenix.Router
+
+      import AskGary.Auth, only: [authenticate_user: 2] # New import
     end
   end
 

@@ -1,0 +1,1 @@
+<div class="row"><p><%= link "< Back", to: channel_path(@conn, :index) %></p></div>

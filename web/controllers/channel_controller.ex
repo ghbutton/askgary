@@ -12,4 +12,21 @@ defmodule AskGary.ChannelController do
     channel = Repo.get(Channel, id)
     render conn, "show.html", channel: channel
   end
+
+  def new(conn, _params) do
+    changeset = Channel.changeset(%Channel{})
+    render conn, "new.html", changeset: changeset
+  end
+
+  def create(conn, %{"channel" => channel_params}) do
+    changeset = Channel.changeset(%Channel{}, channel_params)
+    case Repo.insert(changeset) do
+    {:ok, channel} ->
+      conn
+      |> put_flash(:info, "#{channel.name} created!")
+      |> redirect(to: channel_path(conn, :show, channel.id))
+    {:error, changeset} ->
+      render(conn, "new.html", changeset: changeset)
+    end
+  end
 end
