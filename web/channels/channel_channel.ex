@@ -27,13 +27,11 @@ defmodule AskGary.ChannelChannel do
   end
 
   def handle_in(event, params, socket) do
-    IO.puts "HIHI!! 3"
     user = Repo.get(AskGary.User, socket.assigns.user_id)
     handle_in(event, params, user, socket)
   end
 
   def handle_in("new_message", params, user, socket) do
-    IO.puts "HIHI!! 4"
     changeset =
       user
       |> build(:messages, channel_id: socket.assigns.channel_id)

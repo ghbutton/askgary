@@ -26,7 +26,7 @@ defmodule AskGary.UserController do
       conn
       |> AskGary.Auth.login(user)
       |> put_flash(:info, "#{user.name} created!")
-      |> redirect(to: user_path(conn, :index))
+      |> redirect(to: channel_path(conn, :index))
     {:error, changeset} ->
       render(conn, "new.html", changeset: changeset)
     end
