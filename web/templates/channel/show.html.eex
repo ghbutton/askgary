@@ -1,0 +1,28 @@
+<h1>Showing Channel: <%= render "channel.html", channel: @channel %></h1>
+
+<%= content_tag :div, id: "channel",
+      data: [id: @channel.id] do %>
+<% end %>
+
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Messages</h3>
+      </div>
+      <div id="msg-container" class="panel-body messages">
+
+      </div>
+      <div class="panel-footer">
+        <textarea id="msg-input"
+                  rows="3"
+                  class="form-control"
+                  placeholder="Comment..."></textarea>
+        <button id="msg-submit" class="btn btn-primary form-control"
+type="submit">
+          Post
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
