@@ -25,12 +25,12 @@ form.link, form.button {
   border-bottom: 1px solid #e5e5e5;
 }
 .logo {
-  width: 519px;
-  height: 71px;
+  width: 764px;
+  height: 247px;
   display: inline-block;
   margin-bottom: 1em;
-  background-image: url("/images/phoenix.png");
-  background-size: 519px 71px;
+  background-image: url("http://orig11.deviantart.net/55b6/f/2011/230/6/1/nyan_cat_by_nade-d470878.png");
+  background-size: 764px 247px;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
