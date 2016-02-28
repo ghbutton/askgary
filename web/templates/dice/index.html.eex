@@ -1,0 +1,164 @@
+<div class="jumbotron">
+  <h2>Dice for Machikoro</h2>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">Roll Dice</h3>
+      </div>
+      <div id="msg-container" class="panel-body messages">
+
+      </div>
+      <div class="panel-footer">
+        <textarea id="msg-input"
+                  rows="3"
+                  class="form-control"
+                  placeholder="Roll Dice"></textarea>
+        <button id="msg-submit" class="btn btn-primary form-control"
+type="submit">
+          Post
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  "use strict";
+  window.onload = function() {
+    function shuffle(array) {
+      var currentIndex = array.length, temporaryValue, randomIndex;
+
+      // While there remain elements to shuffle...
+      while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+      }
+
+      return array;
+    }
+
+    var Dice = function (num) {
+      this.values = [];
+      this.num = num;
+      this.refresh(num);
+    }
+
+    Dice.prototype.refresh = function() {
+      if (this.num == 1){
+        this.values = shuffle([1,2,3,4,5,6]);
+      } else {
+        for (var i = 1; i < 7; i++){
+          for (var j = 1; j < 7; j++){
+            this.values.push([i, j]);
+          }
+        }
+
+        shuffle(this.values);
+      }
+    }
+
+    Dice.prototype.roll = function() {
+      var value = this.values.pop();
+
+      if (this.values.length < 1) {
+        this.refresh();
+      }
+
+      return value;
+    }
+
+    var Player = function (num) {
+      this.single = new Dice(1);
+      this.double = new Dice(2);
+      this.num = num;
+      this.name = "";
+    }
+
+    Player.prototype.roll = function(num) {
+      if (num == 1){
+        var value = this.single.roll();
+      } else {
+        var value = this.double.roll();
+      }
+      return value;
+    }
+
+    let msgContainer = document.getElementById("msg-container")
+    let msgInput     = document.getElementById("msg-input")
+    let postButton   = document.getElementById("msg-submit")
+    let players = [];
+    let index = 0;
+
+    function renderMessage(msg){
+      let template = document.createElement("div")
+      template.innerHTML = `
+      ${msg}
+      `
+      msgContainer.appendChild(template)
+      msgContainer.scrollTop = msgContainer.scrollHeight
+    }
+
+    function handleInput(input){
+      if (players.length == 0) {
+        // need input about players
+        for (var i = 0; i < input; i++){
+          players.push(new Player(i));
+        }
+        renderMessage("Number of players:" + i);
+        renderMessage("Enter name for player " + index);
+      } else if (players[index].name == "") {
+        players[index].name = input;
+        incIndex();
+        if (index != 0) {
+          renderMessage("Enter name for player: " + index);
+        } else {
+          renderMessage("Playing. Using '1' for one dice, '2' for two dice. 'n' for next player");
+          renderMessage("Player: " + players[index].name);
+        }
+      } else if (input == "1") {
+        var dice = players[index].roll(1);
+        renderMessage("Roll: " + dice);
+      } else if (input == "2") {
+        var dice = players[index].roll(2);
+        renderMessage("Roll: " + dice);
+      } else if (input == "n") {
+        incIndex();
+        renderMessage("Player: " + players[index].name);
+      }
+    }
+
+    function incIndex(){
+      index++;
+      if (index >= players.length) {
+        index = 0;
+      }
+    }
+
+    postButton.addEventListener("click", e => {
+      handleInput(msgInput.value);
+    })
+
+    msgInput.addEventListener("keydown", function(e) {
+      if (!e) { var e = window.event; }
+
+      // Enter is pressed
+      if (e.keyCode == 13) {
+        e.preventDefault(); // sometimes useful;
+        handleInput(msgInput.value);
+        msgInput.value = ""
+      }
+    }, false);
+
+    renderMessage("Enter the number of players.");
+  };
+</script>

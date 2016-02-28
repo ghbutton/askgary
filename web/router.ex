@@ -18,6 +18,7 @@ defmodule AskGary.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    get "/dice", DiceController, :index
     resources "/users", UserController, only: [:index, :show, :new, :create]
     resources "/sessions", SessionController, only: [:new, :create, :delete]
 
