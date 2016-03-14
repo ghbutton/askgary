@@ -10,6 +10,7 @@ defmodule AskGary.Mixfile do
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
      aliases: aliases,
+     description: "Simple project",
      deps: deps]
   end
 

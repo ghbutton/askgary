@@ -98,6 +98,7 @@ type="submit">
     let postButton   = document.getElementById("msg-submit")
     let players = [];
     let index = 0;
+    let same = false;
 
     function renderMessage(msg){
       let template = document.createElement("div")
@@ -122,17 +123,29 @@ type="submit">
         if (index != 0) {
           renderMessage("Enter name for player: " + index);
         } else {
-          renderMessage("Playing. Using '1' for one dice, '2' for two dice. 'n' for next player");
-          renderMessage("Player: " + players[index].name);
+          renderMessage("Playing. Using '1' for one dice, '2' for two dice. 's' for same player");
+          index = players.length - 1;
         }
       } else if (input == "1") {
+        if (same == false) {
+          incIndex();
+          renderMessage("Player: " + players[index].name);
+        } else {
+          same = false;
+        }
         var dice = players[index].roll(1);
         renderMessage("Roll: " + dice);
       } else if (input == "2") {
+        if (same == false) {
+          incIndex();
+          renderMessage("Player: " + players[index].name);
+        } else {
+          same = false;
+        }
         var dice = players[index].roll(2);
         renderMessage("Roll: " + dice);
-      } else if (input == "n") {
-        incIndex();
+      } else if (input == "s") {
+        same = true;
         renderMessage("Player: " + players[index].name);
       }
     }
