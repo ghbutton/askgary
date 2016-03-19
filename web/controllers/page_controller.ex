@@ -8,4 +8,10 @@ defmodule AskGary.PageController do
       render conn, "index.html"
     end
   end
+
+  def redirect(conn, _params) do
+    conn
+      |> Phoenix.Controller.redirect(external: "http://10.230.11.193:4000/")
+      |> halt
+  end
 end
