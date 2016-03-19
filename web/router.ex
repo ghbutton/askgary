@@ -19,7 +19,7 @@ defmodule AskGary.Router do
 
     get "/", PageController, :index
     get "/dice", DiceController, :index
-    get "/redirect", PageController, :redirect
+    get "/pocketserver", PageController, :pocketserver
     resources "/users", UserController, only: [:index, :show, :new, :create]
     resources "/sessions", SessionController, only: [:new, :create, :delete]
 

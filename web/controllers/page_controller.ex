@@ -9,7 +9,7 @@ defmodule AskGary.PageController do
     end
   end
 
-  def redirect(conn, _params) do
+  def pocketserver(conn, _params) do
     conn
       |> Phoenix.Controller.redirect(external: "http://10.230.11.193:4000/")
       |> halt
